@@ -1,0 +1,2 @@
+# licenseservice
+spring boot project

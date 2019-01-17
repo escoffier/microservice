@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: organizationservice
+
+  profiles:
+    active: work
+  cloud:
+    config:
+      uri: http://140.143.45.252:8888

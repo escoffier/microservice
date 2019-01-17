@@ -1,0 +1,52 @@
+#mybatis.mapper-locations=classpath:organizationMapper.xml
+#mybatis.config-location=classpath:mybatis-config.xml
+#
+#spring.datasource.url=jdbc:mysql://192.168.21.225:3306/mytest
+#spring.datasource.username=testuser
+#spring.datasource.password=19811981
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+#
+#
+#spring.application.name=organizationservice
+#spring.profiles.active=default
+#
+#eureka.instance.prefer-ip-address=true
+#eureka.client.fetch-registry=true
+#eureka.client.register-with-eureka=true
+#eureka.client.service-url.defaultZone = http://192.168.21.120:8761/eureka/
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://140.143.45.252:8761/eureka/
+
+logging.level.org.springframework.web: TRACE
+logging.level.org.springframework.http: TRACE
+logging.level.web: TRACE
+
+
+mybatis:
+  mapper-locations: classpath:organizationMapper.xml
+  config-location: classpath:mybatis-config.xml
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://192.168.21.197:8091/user
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: orgChangeTopic
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: 192.168.21.225:9092
+          zk-nodes: 192.168.21.225:2181
+

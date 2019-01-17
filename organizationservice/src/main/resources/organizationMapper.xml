@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.organizationservice.Mapper.OrganizationMapper">
+    <select id="getOrg" parameterType="long" resultType="organization" >
+        select id, name, contact_name as contactName, contact_email as contactEmail, contact_phone as contactPhone from t_organizations where id = #{id}
+    </select>
+
+    <insert id="saveOrg" parameterType="organization">
+	    insert into t_organizations (id, name, contact_name, contact_email, contact_phone) values (
+	    	#{id}, #{name}, #{contactName}, #{contactEmail}, #{contactPhone}
+	    )
+	</insert>
+
+    <update id="updateOrg" parameterType="organization" >
+        update t_organizations set name= #{name}, contact_name = #{contactName}, contact_email= #{contactEmail}, contact_phone = #{contactPhone}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrg" parameterType="long">
+        delete from t_organizations where id = #{id}
+    </delete>
+</mapper>

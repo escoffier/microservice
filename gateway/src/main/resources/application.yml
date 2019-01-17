@@ -1,0 +1,43 @@
+server:
+  port: 5559
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://140.143.45.252:8761/eureka/
+
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://140.143.45.252:8761/eureka/
+
+  #eureka.client.fetch-registry=true
+#eureka.client.register-with-eureka=true
+#eureka.client.service-url.defaultZone = http://192.168.21.120:8761/eureka/
+
+#zuul.routes.organizationservice = /organization/**
+#management.endpoints.web.exposure.include=*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#security:
+#  oauth2:
+#    resource:
+#      user-info-uri: http://192.168.21.120:8091/user

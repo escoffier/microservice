@@ -1,0 +1,21 @@
+server:
+  port: 8091
+  context-path: /auth
+
+
+logging:
+  level:
+    org.springframework.security: TRACE
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: qiu
+#      client-secret: 19811981
+#      #access-token-uri: http://localhost:8091/oauth/token
+#    authorization:
+#      check-token-access: permitAll()
+#security:
+#  user:
+#    name: robbie
+#    password: 19811981
