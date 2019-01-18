@@ -1,4 +1,4 @@
-package utils;
+package com.licenseservice.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-//Saving tmx-correlation-id and other information from http header to UserContext
 @Component
 public class UserContextFilter implements Filter {
 
@@ -23,7 +22,8 @@ public class UserContextFilter implements Filter {
         UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
         UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
 
-        logger.debug("Special Routes service Incoming Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        logger.info("Special Routes service Incoming Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        logger.info("------UserContextFilter, Auth: " + httpServletRequest.getHeader("Authorization"));
         filterChain.doFilter(httpServletRequest, servletResponse);
     }
 

@@ -1,12 +1,14 @@
 package com.licenseservice.service;
 
+import com.licenseservice.Client.FeignClient.OrganizationFeignClient;
+import com.licenseservice.Client.OrganizationAuthRestTemplateClient;
 import com.licenseservice.Client.OrganizationDiscoveryClient;
-import com.licenseservice.Client.OrganizationFeignClient;
 import com.licenseservice.Client.OrganizationRestTemplateClient;
 import com.licenseservice.Config.ServiceConfig;
 import com.licenseservice.Mapper.LicenseMapper;
 import com.licenseservice.model.License;
 import com.licenseservice.model.Organization;
+import com.licenseservice.exceptions.LicensingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,21 @@ public class LicenseService {
     private OrganizationRestTemplateClient restTemplateClient = null;
 
     @Autowired
+    private OrganizationAuthRestTemplateClient authRestTemplateClient = null;
+
+    //@Autowired
     private OrganizationFeignClient feignClient = null;
+
+    @Autowired
+    public void FeignClient(OrganizationFeignClient cleint) {
+        feignClient = cleint;
+
+    }
+
+//    @Autowired
+//    public void setFeignClient() {
+//        feignClient = Feign.builder().requestInterceptor(OrganizationFeignClient.authRequestInterceptor()).target(OrganizationFeignClient.class, "http://organizationservice");
+//    }
 
     @Autowired
     private ServiceConfig serviceConfig = null;
@@ -37,17 +53,20 @@ public class LicenseService {
 
         switch (clientType){
             case "discovery":
-                logger.info("using discovery client");
-                System.out.println("---discovery client");
+                logger.info("---discovery client");
                 organization = discoveryClient.getOrganization(organizationId);
                 break;
             case "rest":
-                System.out.println("---rest client");
+                logger.info("---rest client");
                 organization = restTemplateClient.getOrganization(organizationId);
                 break;
             case "feign":
-                System.out.println("---feign client");
-                organization = feignClient.getOrganization(organizationId);
+                logger.info("---feign client");
+                organization = feignClient.getOrganization(organizationId.toString());
+                break;
+            case "authrest":
+                logger.info("---auth rest client");
+                organization = authRestTemplateClient.getOrganization(organizationId);
         }
 
         return organization;
@@ -55,9 +74,16 @@ public class LicenseService {
     }
 
     public License getLicense(Long organizationId, Long licenseId, String clientType) {
+        //License license = new License();
         License license = licenseMapper.getLicense(organizationId, licenseId);
+        if (license == null) {
+            throw new LicensingException(organizationId, licenseId);
+        }
 
         Organization org = retrieveOrgInfo(organizationId, clientType);
+        if (org == null) {
+            throw new LicensingException(organizationId, licenseId);
+        }
 
         license.setOrganizationName(org.getName());
         license.setContactName(org.getContactName());

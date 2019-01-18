@@ -10,9 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+
 public class ClientConfig {
 
-    @Bean
+    @Bean("restTemplate")
     @LoadBalanced
     public  RestTemplate getRestTemplate(){
 
@@ -29,8 +30,4 @@ public class ClientConfig {
         return restTemplate;
     }
 
-//    @Bean
-//    CurrentTraceContext log4jTraceContext() {
-//        return MDCCurrentTraceContext.create();
-//    }
 }

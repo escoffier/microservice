@@ -19,19 +19,20 @@ public class OrganizationChangeHandler {
     public void loggerSink(OrgChangeModel orgChange) {
         logger.info("----Received a message of type " + orgChange.getTypeName());
 
-        switch (orgChange.getTypeName()){
+        switch (orgChange.getAction()){
             case "get":
-                logger.debug("Received a GET event from the organization service for organization id {}", orgChange.getOrgId());
+                logger.info("Received a GET event from the organization service for organization id {}", orgChange.getOrgId());
                 break;
             case "save":
-                logger.debug("Received a SAVE event from the organization service for organization id {}", orgChange.getOrgId());
+                logger.info("Received a SAVE event from the organization service for organization id {}", orgChange.getOrgId());
+                break;
                 //redisRepository.saveOrganization(orgChange);
             case "update":
-                logger.debug("Received a UPDATE event from the organization service for organization id {}", orgChange.getOrgId());
+                logger.info("Received a UPDATE event from the organization service for organization id {}", orgChange.getOrgId());
                 redisRepository.deleteOrganization(orgChange.getOrgId());
                 break;
             case "delete":
-                logger.debug("Received a DELETE event from the organization service for organization id {}", orgChange.getOrgId());
+                logger.info("Received a DELETE event from the organization service for organization id {}", orgChange.getOrgId());
                 redisRepository.deleteOrganization(orgChange.getOrgId());
                 break;
             default:

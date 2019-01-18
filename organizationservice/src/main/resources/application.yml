@@ -24,20 +24,6 @@
 #    register-with-eureka: true
 #    service-url:
 #      defaultZone: http://140.143.45.252:8761/eureka/
-
-logging.level.org.springframework.web: TRACE
-logging.level.org.springframework.http: TRACE
-logging.level.web: TRACE
-
-
-mybatis:
-  mapper-locations: classpath:organizationMapper.xml
-  config-location: classpath:mybatis-config.xml
-
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://192.168.21.197:8091/user
 spring:
   cloud:
     stream:
@@ -49,4 +35,18 @@ spring:
         binder:
           brokers: 192.168.21.225:9092
           zk-nodes: 192.168.21.225:2181
+
+logging.level.org.springframework.web: TRACE
+logging.level.org.springframework.http: TRACE
+logging.level.web: TRACE
+
+mybatis:
+  mapper-locations: classpath:organizationMapper.xml
+  config-location: classpath:mybatis-config.xml
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://192.168.21.182:8091/user
+
 

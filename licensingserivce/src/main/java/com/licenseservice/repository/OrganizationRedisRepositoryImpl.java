@@ -13,7 +13,7 @@ public class OrganizationRedisRepositoryImpl implements OrganizationRedisReposit
 
     private final static String HASH_NAME = "organization";
 
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<Long, Organization> redisTemplate;
     private HashOperations hashOperations;
 
     @Autowired
