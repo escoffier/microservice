@@ -1,0 +1,84 @@
+server:
+  port: 9090
+
+mybatis:
+  mapper-locations: classpath:licenseMapper.xml
+  config-location: classpath:mybatis-config.xml
+  
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 192.168.254.1
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+
+spring:
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1.0
+  cloud:
+    stream:
+      bindings:
+        inboundOrgChanges:
+          destination: orgChangeTopic
+          content-type: application/json
+          group: licesinggroup
+      kafka:
+        binder:
+          brokers: localhost:9092
+          #zk-nodes: 192.168.21.225:2181
+
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    org.springframework.web: DEBUG
+#logging.file=${logging.path}/licenseservice.log
+
+---
+spring:
+  profiles: dev
+  datasource:
+    username: root
+    password: 19811981
+    url: jdbc:mysql://127.0.0.1:3306/licensings
+    driver-class-name: com.mysql.cj.jdbc.Driver
+example:
+  property: this is a comment
+redis:
+  host: 127.0.0.1
+  port: 6379
+grpc:
+  client:
+    organization-service:
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+---
+spring:
+  profiles: product
+  cloud:
+    stream:
+      bindings:
+        inboundOrgChanges:
+          destination: orgChangeTopic
+          content-type: application/json
+          group: licesinggroup
+      kafka:
+        binder:
+          brokers: 192.168.254.131:9092
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://192.168.21.182:8091/user
+

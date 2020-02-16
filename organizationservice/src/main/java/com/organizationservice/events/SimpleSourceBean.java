@@ -12,20 +12,23 @@ import utils.UserContextHolder;
 @Component
 @EnableBinding(Source.class)
 public class SimpleSourceBean {
-    private Source source;
 
     private final static Logger logger = LoggerFactory.getLogger(SimpleSourceBean.class);
+    private Source source;
 
-    @Autowired
+    @Autowired(required = false)
     public SimpleSourceBean(Source source){
         this.source = source;
     }
 
     public void publishOrg(String action, Long orgId) {
-        logger.info("Sending kafka message {} for org id {}", action, orgId);
 
         OrgChangeModel changeModel = new OrgChangeModel(OrgChangeModel.class.getTypeName(), action, orgId, UserContextHolder.getContext().getCorrelationId());
-        source.output().send(MessageBuilder.withPayload(changeModel).build());
-
+        if (source != null) {
+            logger.info("Sending kafka message {} for org id {}", action, orgId);
+            source.output().send(MessageBuilder.withPayload(changeModel).build());
+        } else {
+            logger.warn("publish org changed event to null");
+        }
     }
 }

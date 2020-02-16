@@ -1,0 +1,95 @@
+
+logging:
+  level:
+    com:
+      netflix: trace
+    #org.springframework.cloud: TRACE
+    org:
+      springframework:
+        data:
+          redis: TRACE
+        cloud: DEBUG
+
+
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    sender:
+      type: web
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+#          predicates[0]:
+#            name: Path
+#            args[pattern]: "'/'+serviceId+'/**'"
+#          filters[0]:
+#            name: CircuitBreaker
+#            args[name]: serviceId
+      routes:
+        - id: circuitbreaker_route
+          uri: http://192.168.254.132:8090
+          predicates:
+             - Path=/v1/organizations/{segment}
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/inCaseOfFailureUseThis
+            #- CircuitBreaker=myCircuitBreaker
+#        - id: organization_route
+#          uri: http://192.168.254.132:8090
+#          predicates:
+#            - Path=/v1/organizations/{segment}
+#          filters:
+#            - AddRequestHeader=X-Request-Foo, Bar
+#        - id: requestratelimiter_route
+#          uri: http://192.168.254.132:8090
+#          predicates:
+#            - Path=/v2/organizations/{segment}
+#          filters:
+#          - name: RequestRateLimiter
+#            args:
+#              redis-rate-limiter.replenishRate: 10
+#              redis-rate-limiter.burstCapacity: 20
+#spring.cloud.gateway.discovery.locator.predicates[0].name: Path
+#spring.cloud.gateway.discovery.locator.predicates[0].args[pattern]: "'/'+serviceId+'/**'"
+
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      registerHealthIndicator: true
+#      ringBufferSizeInClosedState: 10
+#      ringBufferSizeInHalfOpenState: 3
+#      automaticTransitionFromOpenToHalfOpenEnabled: true
+#      waitDurationInOpenState: 2s
+#      failureRateThreshold: 50
+#      eventConsumerBufferSize: 10
+#      ignoreExceptions:
+#        - com.empserver.exceptions.BusinessException
+#    shared:
+#      registerHealthIndicator: true
+#      ringBufferSizeInClosedState: 100
+#      ringBufferSizeInHalfOpenState: 30
+#      waitDurationInOpenState: 1s
+#      failureRateThreshold: 50
+#      eventConsumerBufferSize: 10
+#      ignoreExceptions:
+#        - com.empserver.exceptions.BusinessException
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    enabled: true
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+server:
+  address: 127.0.0.1
+  port: 18080

@@ -14,7 +14,7 @@ eureka:
 
 logging:
   level:
-    org.springframework.cloud.config: DEBUG
+    org.springframework.cloud: DEBUG
 
 #eureka:
 #  instance:

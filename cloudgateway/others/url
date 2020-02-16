@@ -1,0 +1,6 @@
+http://192.168.254.1:8080/ORGANIZATIONSERVICE/v1/organizations/28
+
+http://192.168.254.1:8080/LICENSINGSERVICE/v1/organizations/28/licenses/28/feign
+
+http://192.168.254.1:8080/v1/organizations/28
+http://192.168.254.132:8080/v1/organizations/28

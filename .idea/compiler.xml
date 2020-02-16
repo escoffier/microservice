@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gateway" />
+        <module name="licensingservice" />
+        <module name="discoverserver" />
+        <module name="common" />
+        <module name="cloudgateway" />
+        <module name="organizationservice" />
+        <module name="authenticationserivce" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="authenticationserivce" target="1.8" />
+      <module name="cloudgateway" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="discoverserver" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="licensingservice" target="1.8" />
+      <module name="microservice" target="1.8" />
+      <module name="organizationservice" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authenticationserivce" options="-parameters" />
+      <module name="cloudgateway" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="discoverserver" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="licensingservice" options="-parameters" />
+      <module name="organizationservice" options="-parameters" />
+    </option>
+  </component>
+</project>
