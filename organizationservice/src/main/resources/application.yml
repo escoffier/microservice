@@ -35,23 +35,28 @@ spring:
   sleuth:
     sampler:
       probability: 1.0
-  cloud:
-    stream:
-      bindings:
-        output:
-          destination: orgChangeTopic
-          content-type: application/json
-      kafka:
-        binder:
-          brokers: 127.0.0.1:9092
-          #zk-nodes: 192.168.21.225:2181
+#  cloud:
+#    stream:
+#      bindings:
+#        output:
+#          destination: orgChangeTopic
+#          content-type: application/json
+#      kafka:
+#        binder:
+#          brokers: 127.0.0.1:9092
+#          #zk-nodes: 192.168.21.225:2181
 
 logging.level.org.springframework.cloud: DEBUG
-#logging.level.org.springframework.web: TRACE
-#logging.level.org.springframework.http: TRACE
+logging.level.org.springframework.web: TRACE
+logging.level.org.springframework.http: TRACE
 #logging.level.web: TRACE
 #logging.level.com.netflix: TRACE
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 mybatis:
   mapper-locations: classpath:organizationMapper.xml
   config-location: classpath:mybatis-config.xml

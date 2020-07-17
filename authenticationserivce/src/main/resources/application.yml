@@ -1,6 +1,7 @@
 server:
   port: 8091
-  context-path: /auth
+  servlet:
+    context-path: /auth
 
 
 logging:

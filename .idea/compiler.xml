@@ -11,8 +11,8 @@
         <module name="discoverserver" />
         <module name="common" />
         <module name="cloudgateway" />
-        <module name="organizationservice" />
         <module name="authenticationserivce" />
+        <module name="organizationservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

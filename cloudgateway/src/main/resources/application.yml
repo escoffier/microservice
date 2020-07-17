@@ -8,7 +8,9 @@ logging:
       springframework:
         data:
           redis: TRACE
-        cloud: DEBUG
+        cloud:
+          gateway: trace
+
 
 
 spring:
@@ -20,6 +22,9 @@ spring:
     sender:
       type: web
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false  # This disables the default Netflix Ribbon-backed load balancing strategy that’s been in place since Spring Cloud debuted in 2015.
     gateway:
       discovery:
         locator:
@@ -32,15 +37,17 @@ spring:
 #            args[name]: serviceId
       routes:
         - id: circuitbreaker_route
-          uri: http://192.168.254.132:8090
+#          uri: http://192.168.254.132:8090
+          uri: lb://ORGANIZATION-SERVICE
           predicates:
-             - Path=/v1/organizations/{segment}
+             - Path=/v2/organizations/{segment}
           filters:
             - name: CircuitBreaker
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/inCaseOfFailureUseThis
-            #- CircuitBreaker=myCircuitBreaker
+
+
 #        - id: organization_route
 #          uri: http://192.168.254.132:8090
 #          predicates:

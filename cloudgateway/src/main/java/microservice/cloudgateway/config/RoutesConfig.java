@@ -22,8 +22,12 @@ import java.time.Duration;
 @Configuration
 public class RoutesConfig {
 
+    private final CircuitBreakerFactory circuitBreakerFactory;
+
     @Autowired
-    private CircuitBreakerFactory circuitBreakerFactory;
+    public RoutesConfig(CircuitBreakerFactory circuitBreakerFactory) {
+        this.circuitBreakerFactory = circuitBreakerFactory;
+    }
 
 /*
     @Bean
@@ -59,8 +63,18 @@ public class RoutesConfig {
 //    public RouteLocator routes(RouteLocatorBuilder builder) {
 //        return builder.routes()
 //                .route("circuitbreaker_route", r -> r.path("/consumingServiceEndpoint")
+//                        .filters(f -> f.circuitBreaker(c -> c.setName("myCircuitBreaker").setFallbackUri("forward:/inCaseOfFailureUseThis"))
+//                                .rewritePath("/consumingServiceEndpoint", "/backingServiceEndpoint")).uri("lb://backing-service:8088")
+//                        .build();
+//    }
+
+//    @Bean
+//    public RouteLocator routes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route("circuitbreaker_route", r -> r.path("/consumingServiceEndpoint")
 //                        .filters(f -> f.circuitBreaker(c -> c.name("myCircuitBreaker").fallbackUri("forward:/inCaseOfFailureUseThis"))
 //                                .rewritePath("/consumingServiceEndpoint", "/backingServiceEndpoint")).uri("lb://backing-service:8088")
 //                        .build();
 //    }
+
 }
